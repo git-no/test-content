@@ -2,7 +2,9 @@ name: Create Index
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 jobs:
   create-index:
@@ -14,7 +16,6 @@ jobs:
         
       - name: Checkout code
         uses: actions/checkout@v3
-        with: main
         
       - name: Create index of Markdown files
         uses: git ls-tree git ls-tree -r master --name-only **/*.md | jq -MRn '[inputs]' > index.json
