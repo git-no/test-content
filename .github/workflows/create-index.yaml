@@ -1,0 +1,22 @@
+name: Create Index
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  create-index:
+    name: Create Index
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install JQ
+        uses: apt-get update && apt-get -y install jq
+        
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Create index of Markdown files
+        uses: git ls-tree git ls-tree -r master --name-only **/*.md | jq -MRn '[inputs]' > index.json
+        with:  
+          token: "${{ secrets.GITHUB_TOKEN }}"
+      
