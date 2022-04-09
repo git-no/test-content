@@ -2,7 +2,7 @@ name: Create Index
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   create-index:
@@ -13,7 +13,8 @@ jobs:
         uses: apt-get update && apt-get -y install jq
         
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+        with: main
         
       - name: Create index of Markdown files
         uses: git ls-tree git ls-tree -r master --name-only **/*.md | jq -MRn '[inputs]' > index.json
